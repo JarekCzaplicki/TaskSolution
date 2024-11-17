@@ -16,7 +16,7 @@ import java.util.Locale;
 public class ProductServiceStart implements ProductService {
     @Value("${locale}")
     private String locale;
-    private Double summaryPrice;
+    private Double summaryPrice = 0.0d;
     private final CreateProducts createProducts;
     private final MessageSource messageSource;
 
