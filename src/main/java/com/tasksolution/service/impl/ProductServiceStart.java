@@ -15,10 +15,10 @@ import java.util.Locale;
 @Profile("start")
 public class ProductServiceStart implements ProductService {
     @Value("${locale}")
-    private String locale;
-    private Double summaryPrice = 0.0d;
-    private final CreateProducts createProducts;
-    private final MessageSource messageSource;
+    String locale;
+    Double summaryPrice = 0.0d;
+    final CreateProducts createProducts;
+    final MessageSource messageSource;
 
     public ProductServiceStart(CreateProducts createProducts, MessageSource messageSource) {
         this.createProducts = createProducts;

@@ -13,38 +13,22 @@ import java.util.Locale;
 
 @Service
 @Profile("plus")
-public class ProductServicePlus implements ProductService {
+public class ProductServicePlus extends ProductServiceStart {
     @Value("${vatRate}")
     private double vatRate;
-    @Value("${locale}")
-    private String locale;
-    private Double summaryPrice = 0.0d;
-    private Double summaryVatPrice = 0.0d;
-    private final CreateProducts createProducts;
-    private final MessageSource messageSource;
+
 
     public ProductServicePlus(CreateProducts createProducts, MessageSource messageSource) {
-        this.createProducts = createProducts;
-        this.messageSource = messageSource;
+        super(createProducts, messageSource);
     }
 
     @Override
     public void printInfo() {
-        List<Product> products = createProducts.create(5);
-        for (Product product : products) {
-            summaryPrice += product.getPrice();
-        }
-        System.out.println(messageSource.getMessage(
-                "price_of_all_products"
-                , new Object[]{summaryPrice}
-                , Locale.forLanguageTag(this.locale)
-        ));
-
-        summaryVatPrice = Math.round((summaryPrice + (summaryPrice * vatRate)) * 100.0) / 100.0;
+        super.printInfo(); // text from ProductServiceStart
 
         System.out.println(messageSource.getMessage(
-                "price_of_all_products_"
-                , new Object[]{summaryVatPrice}
+                "price_of_all_products_plus_vat"
+                , new Object[]{Math.round((summaryPrice + (summaryPrice * vatRate)) * 100.0) / 100.0}
                 , Locale.forLanguageTag(this.locale)
         ));
     }
